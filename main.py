@@ -17,8 +17,10 @@ class Student:
         else: 'Ошибка'
 
     def __str__(self):
-        #list_avg = mean(self.grades)
-        text = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания:{self.grades}\nКурсы в процессе изучения: {self.courses_in_progress}\nЗавершенные курсы: {self.finished_courses}"
+        list_avg = 0
+        for grad in self.grades:
+            list_avg = mean( self.grades.get(grad) )
+        text = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {list_avg}\nКурсы в процессе изучения: {','.join(self.courses_in_progress)}\nЗавершенные курсы: {','.join(self.finished_courses)}"
         return text
 
 class Mentor:
@@ -44,8 +46,9 @@ class Lecturer(Mentor):
         self.grades = {}
 
     def __str__(self):
-        #list_avg = mean(self.grades)
-        text = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции:{self.grades}"
+        for grad in self.grades:
+            list_avg = mean( self.grades.get(grad) )
+        text = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции:{list_avg}"
         return text
 
 
@@ -89,6 +92,7 @@ second_student.courses_in_progress += ['Geology']
 cool_lecturer = Lecturer('Sam', 'Smith')
 cool_lecturer.courses_attached += ['Geology']
 second_student.grade_for_a_lectur(cool_lecturer, 'Geology', 9)
+second_student.grade_for_a_lectur(cool_lecturer, 'Geology', 8)
 
 print(cool_lecturer.grades)
 
