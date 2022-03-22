@@ -61,6 +61,27 @@ class Reviewer(Mentor):
         text = f"Имя: {self.name}\nФамилия: {self.surname}"
         return text
 
+def calc_avg(self, cours):
+    list_avg = 0
+    for lst in self:
+        bcalc = False
+        if cours in lst.courses_in_progress:
+            bcalc = True
+        if cours in lst.finished_courses:
+            bcalc = True
+        if bcalc:
+            for grad in lst.grades:
+                list_avg += mean(lst.grades.get(grad))
+    return list_avg / len(self)
+
+def calc_avg_lec(self, cours):
+    list_avg = 0
+    for lst in self:
+        if cours in lst.courses_attached:
+           for grad in lst.grades:
+                list_avg += mean(lst.grades.get(grad))
+    return list_avg / len(self)
+
 
 best_student = Student('Ruoy', 'Eman', 'boy')
 best_student.courses_in_progress += ['Python']
@@ -84,6 +105,11 @@ cool_lecturer = Lecturer('Sam', 'Smith')
 cool_lecturer.courses_attached += ['Geology']
 second_student.grade_for_a_lectur(cool_lecturer, 'Geology', 9)
 second_student.grade_for_a_lectur(cool_lecturer, 'Geology', 8)
+
+second_lecturer = Lecturer('Lean', 'Polk')
+second_lecturer.courses_attached += ['Geology']
+second_student.grade_for_a_lectur(cool_lecturer, 'Geology', 6)
+second_student.grade_for_a_lectur(cool_lecturer, 'Geology', 7)
 
 print(cool_lecturer.grades)
 
@@ -114,3 +140,9 @@ m2.rate_hw(s2, 'Geology', 6)
 
 l1.rate_hw(s1, 'Geology', 7)
 l2.rate_hw(s2, 'Geology', 6)
+
+list_student = [best_student, second_student]
+print( f"\nсредняя оцена студентов по курсу Python: {calc_avg(list_student, 'Python')}" )
+
+list_lecturer = [cool_lecturer, second_lecturer]
+print( f"\nсредняя оцена за лекции всех лекторов в рамках курса Geology: {calc_avg_lec(list_lecturer, 'Geology')}" )
