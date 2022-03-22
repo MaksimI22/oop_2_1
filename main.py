@@ -57,15 +57,6 @@ class Reviewer(Mentor):
         super().__init__(name, surname)
         self.courses_attached = []
 
-    def rate_hw(self, student, course, grade):
-        if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
-            if course in student.grades:
-                student.grades[course] += [grade]
-            else:
-                student.grades[course] = [grade]
-        else:
-            return 'Ошибка'
-
     def __str__(self):
         text = f"Имя: {self.name}\nФамилия: {self.surname}"
         return text
@@ -99,3 +90,27 @@ print(cool_lecturer.grades)
 print(cool_reviewer)
 print(cool_lecturer)
 print(best_student)
+
+s1 = Student('Ruoy1', 'Eman1', 'boy1')
+s2 = Student('Ruoy2', 'Eman2', 'boy2')
+
+m1 = Mentor('Bil1', 'Tom2')
+m2 = Mentor('Bil2', 'Tom2')
+
+l1 = Lecturer('Sam1', 'Smith1')
+l2 = Lecturer('Sam2', 'Smith2')
+
+r1 = Reviewer('Some1', 'Buddy1')
+r2 = Reviewer('Some2', 'Buddy2')
+
+s1.grade_for_a_lectur(l1, 'Geology', 7)
+s2.grade_for_a_lectur(l2, 'Geology', 6)
+
+r1.rate_hw(s1, 'Python', 9)
+r2.rate_hw(s2, 'Python', 9)
+
+m1.rate_hw(s1, 'Geology', 7)
+m2.rate_hw(s2, 'Geology', 6)
+
+l1.rate_hw(s1, 'Geology', 7)
+l2.rate_hw(s2, 'Geology', 6)
