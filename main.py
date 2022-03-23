@@ -8,6 +8,7 @@ class Student:
         self.finished_courses = []
         self.courses_in_progress = []
         self.grades = {}
+        self.list_avg = 0
 
     def grade_for_a_lectur(self, lecturer, course, grade):
         if isinstance(lecturer, Lecturer) and course in self.courses_in_progress and course in lecturer.courses_attached:
@@ -17,17 +18,20 @@ class Student:
         else: 'Ошибка'
 
     def __str__(self):
-        list_avg = 0
         for grad in self.grades:
             list_avg = mean( self.grades.get(grad) )
         text = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {list_avg}\nКурсы в процессе изучения: {','.join(self.courses_in_progress)}\nЗавершенные курсы: {','.join(self.finished_courses)}"
         return text
+
+    def __lt__(self, other):
+        return self.list_avg < other.list_avg
 
 class Mentor:
     def __init__(self, name, surname):
         self.name = name
         self.surname = surname
         self.courses_attached = []
+        self.list_avg = 0
 
     def rate_hw(self, student, course, grade):
         if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
@@ -37,6 +41,9 @@ class Mentor:
                 student.grades[course] = [grade]
         else:
             return 'Ошибка'
+
+    def __lt__(self, other):
+        return self.list_avg < other.list_avg
 
 
 class Lecturer(Mentor):
@@ -146,3 +153,8 @@ print( f"\nсредняя оцена студентов по курсу Python: 
 
 list_lecturer = [cool_lecturer, second_lecturer]
 print( f"\nсредняя оцена за лекции всех лекторов в рамках курса Geology: {calc_avg_lec(list_lecturer, 'Geology')}" )
+
+is_lt_s = (second_student.list_avg < best_student.list_avg)
+is_lt_l = (cool_lecturer.list_avg < second_lecturer.list_avg)
+print(is_lt_s)
+print(is_lt_l)
